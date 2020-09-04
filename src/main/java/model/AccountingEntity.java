@@ -11,10 +11,10 @@ public class AccountingEntity {
     private int id;
     private int accountNum;
     private BigDecimal inputBalance;
-    private boolean isasset;
+    private boolean isAsset;
     private BigDecimal turnoverDebit;
     private BigDecimal turnoverCredit;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountingEntity")
     private List<BankAccountEntity> bankAccountEntityList;
 
     public AccountingEntity() { }
@@ -43,12 +43,12 @@ public class AccountingEntity {
         this.inputBalance = inputBalance;
     }
 
-    public boolean isIsasset() {
-        return isasset;
+    public boolean isIsAsset() {
+        return isAsset;
     }
 
-    public void setIsasset(boolean isasset) {
-        this.isasset = isasset;
+    public void setIsAsset(boolean isasset) {
+        this.isAsset = isasset;
     }
 
     public BigDecimal getTurnoverDebit() {

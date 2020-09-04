@@ -13,8 +13,10 @@ public class PeriodEntity {
     private Date finishDate;
     private Date createDocDate;
     private String docName;
-    @OneToMany
+    @OneToMany(mappedBy = "periodEntity")
     private List<BankAccountEntity> bankAccountEntityList;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "periodEntity")
+    private List<ClassNameEntity> classNameEntityList;
 
     public PeriodEntity() { }
 

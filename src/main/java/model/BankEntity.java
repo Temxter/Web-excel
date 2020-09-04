@@ -9,7 +9,7 @@ public class BankEntity {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "bankEntity")
     private List<BankAccountEntity> bankAccountEntityList;
 
     public BankEntity() { }
