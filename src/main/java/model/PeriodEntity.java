@@ -1,7 +1,8 @@
 package model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,12 +14,39 @@ public class PeriodEntity {
     private Date finishDate;
     private Date createDocDate;
     private String docName;
+    private String fileName;
     @OneToMany(mappedBy = "periodEntity")
-    private List<BankAccountEntity> bankAccountEntityList;
+    private List<AccountingEntity> accountingEntityList;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "periodEntity")
     private List<ClassNameEntity> classNameEntityList;
 
     public PeriodEntity() { }
+
+    public PeriodEntity(Date startDate, Date finishDate, Date createDocDate, String docName, String fileName) {
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.createDocDate = createDocDate;
+        this.docName = docName;
+        this.fileName = fileName;
+        accountingEntityList = new ArrayList<>();
+        classNameEntityList = new ArrayList<>();
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public List<ClassNameEntity> getClassNameEntityList() {
+        return classNameEntityList;
+    }
+
+    public void setClassNameEntityList(List<ClassNameEntity> classNameEntityList) {
+        this.classNameEntityList = classNameEntityList;
+    }
 
     public int getId() {
         return id;
@@ -60,11 +88,11 @@ public class PeriodEntity {
         this.docName = docName;
     }
 
-    public List<BankAccountEntity> getBankAccountEntityList() {
-        return bankAccountEntityList;
+    public List<AccountingEntity> getAccountingEntityList() {
+        return accountingEntityList;
     }
 
-    public void setBankAccountEntityList(List<BankAccountEntity> bankAccountEntityList) {
-        this.bankAccountEntityList = bankAccountEntityList;
+    public void setAccountingEntityList(List<AccountingEntity> accountingEntityList) {
+        this.accountingEntityList = accountingEntityList;
     }
 }

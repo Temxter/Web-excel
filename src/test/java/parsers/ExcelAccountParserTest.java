@@ -1,9 +1,12 @@
 package parsers;
 
+import model.AccountingEntity;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 public class ExcelAccountParserTest {
 
@@ -11,6 +14,8 @@ public class ExcelAccountParserTest {
     public void parse() throws IOException, ParseException {
         ExcelAccountParser parser = new ExcelAccountParser();
 
-        parser.parse("test.xls");
+        List<AccountingEntity> accountingEntityList = parser.parse("test.xls");
+
+        Assert.assertTrue(accountingEntityList.size() > 0);
     }
 }

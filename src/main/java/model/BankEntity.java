@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,9 +11,14 @@ public class BankEntity {
     private int id;
     private String name;
     @OneToMany(mappedBy = "bankEntity")
-    private List<BankAccountEntity> bankAccountEntityList;
+    private List<AccountingEntity> accountingEntityList;
 
     public BankEntity() { }
+
+    public BankEntity(String name) {
+        this.name = name;
+        accountingEntityList = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
@@ -30,11 +36,11 @@ public class BankEntity {
         this.name = name;
     }
 
-    public List<BankAccountEntity> getBankAccountEntityList() {
-        return bankAccountEntityList;
+    public List<AccountingEntity> getAccountingEntityList() {
+        return accountingEntityList;
     }
 
-    public void setBankAccountEntityList(List<BankAccountEntity> bankAccountEntityList) {
-        this.bankAccountEntityList = bankAccountEntityList;
+    public void setAccountingEntityList(List<AccountingEntity> accountingEntityList) {
+        this.accountingEntityList = accountingEntityList;
     }
 }
