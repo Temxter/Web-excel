@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 
 public interface Dao<T> {
 
-    T get(long id);
+    T get(int id);
 
     List<T> getAll();
 

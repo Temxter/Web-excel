@@ -1,53 +1,55 @@
 package dao;
 
+
 import model.AccountingEntity;
+import model.PeriodEntity;
 import services.EntityManagerFactorySingleton;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class DaoAccountingEntity implements Dao<AccountingEntity> {
+public class DaoPeriodEntity implements Dao<PeriodEntity> {
 
     private EntityManager getEntityManager() {
         return EntityManagerFactorySingleton.getInstance().createEntityManager();
     }
 
     @Override
-    public AccountingEntity get(int id) {
+    public PeriodEntity get(int id) {
         EntityManager entityManager = getEntityManager();
-        AccountingEntity accountingEntity = entityManager.find(AccountingEntity.class, id);
+        PeriodEntity periodEntity = entityManager.find(PeriodEntity.class, id);
         entityManager.close();
-        return accountingEntity;
+        return periodEntity;
     }
 
     @Override
-    public List<AccountingEntity> getAll() {
+    public List<PeriodEntity> getAll() {
         EntityManager entityManager = getEntityManager();
-        Query query = entityManager.createQuery("FROM ACCOUNTING");
+        Query query = entityManager.createQuery("FROM PeriodEntity");
         List resultList = query.getResultList();
         entityManager.close();
         return resultList;
     }
 
     @Override
-    public void save(AccountingEntity accountingEntity) {
+    public void save(PeriodEntity periodEntity) {
         EntityManager entityManager = getEntityManager();
-        Dao.executeInsideTransaction(entityManager, em -> em.persist(accountingEntity));
+        Dao.executeInsideTransaction(entityManager, em -> em.persist(periodEntity));
         entityManager.close();
     }
 
     @Override
-    public void update(AccountingEntity accountingEntity) {
+    public void update(PeriodEntity periodEntity) {
         EntityManager entityManager = getEntityManager();
-        Dao.executeInsideTransaction(entityManager, em -> em.merge(accountingEntity));
+        Dao.executeInsideTransaction(entityManager, em -> em.merge(periodEntity));
         entityManager.close();
     }
 
     @Override
-    public void delete(AccountingEntity accountingEntity) {
+    public void delete(PeriodEntity periodEntity) {
         EntityManager entityManager = getEntityManager();
-        Dao.executeInsideTransaction(entityManager, em -> em.remove(accountingEntity));
+        Dao.executeInsideTransaction(entityManager, em -> em.remove(periodEntity));
         entityManager.close();
     }
 

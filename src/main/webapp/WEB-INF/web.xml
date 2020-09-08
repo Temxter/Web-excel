@@ -5,4 +5,27 @@
          version="3.1">
   <display-name>Web Xml Webapp</display-name>
 
+  <servlet>
+    <servlet-name>files</servlet-name>
+    <servlet-class>servlets.TableExcelServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>files</servlet-name>
+    <url-pattern>/files</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>TableExcel</servlet-name>
+    <servlet-class>servlets.TableExcelServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>TableExcel</servlet-name>
+    <url-pattern>/files/*</url-pattern>
+  </servlet-mapping>
+  
+  <error-page>
+    <location>/WEB-INF/pages/errors/error.jsp</location>
+  </error-page>
 </web-app>
