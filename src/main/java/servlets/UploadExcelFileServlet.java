@@ -41,10 +41,10 @@ public class UploadExcelFileServlet extends HttpServlet {
         for (File file : filesToProcessing) {
             try {
                 ExcelFileHandler.saveFileToDatabase(file.getName());
-                param = "message=Файл загружен и обработан успешно!";
+                param = "message=File uploaded and processed successfully!";
             } catch (Exception e) {
                 System.err.println("Error save file to database: " + e.getMessage());
-                param = "error=Ошибка: файл не может быть обработан!";
+                param = "error=Error: file cannot be processed!";
             }
         }
         resp.sendRedirect(String.format("%s/upload?%s",
