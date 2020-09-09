@@ -30,6 +30,14 @@ public class DaoAccountingEntity implements Dao<AccountingEntity> {
         return resultList;
     }
 
+    public void saveList(List<AccountingEntity> accountingEntityList) {
+        EntityManager entityManager = getEntityManager();
+        for (AccountingEntity accountingEntity : accountingEntityList) {
+            Dao.executeInsideTransaction(entityManager, em -> em.persist(accountingEntity));
+        }
+        entityManager.close();
+    }
+
     @Override
     public void save(AccountingEntity accountingEntity) {
         EntityManager entityManager = getEntityManager();
@@ -47,7 +55,8 @@ public class DaoAccountingEntity implements Dao<AccountingEntity> {
     @Override
     public void delete(AccountingEntity accountingEntity) {
         EntityManager entityManager = getEntityManager();
-        Dao.executeInsideTransaction(entityManager, em -> em.remove(accountingEntity));
+        Dao.executeInsideTransaction(entityManager, em -> em.remove(em.contains(accountingEntity)
+                ? accountingEntity : em.merge(accountingEntity)));
         entityManager.close();
     }
 

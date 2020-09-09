@@ -7,25 +7,27 @@
 <tags:master pageTitle="Files">
     <head></head>
 
+    <p class="center-text"><a href="${pageContext.request.contextPath}/upload">Загрузить Excel документ</a></p>
+
     <table>
         <thead>
         <tr>
-            <td>File Name</td>
-            <td>Document Name</td>
-            <td>Start Date</td>
-            <td>Finish Date</td>
-            <td>Document Created Date</td>
+            <th>Название файла</th>
+            <th>Название документа</th>
+            <th>Дата начала отчета</th>
+            <th>Дата конца отчета</th>
+            <th>Дата создания отчета</th>
         </tr>
         </thead>
-        <c:forEach var="accountingEntity" items="${files}">
+        <c:forEach var="periodEntity" items="${files}">
             <tr>
                 <td>
-                   <a href="${pageContext.request.contextPath}/files/${accountingEntity.id}">${accountingEntity.fileName}</a>
+                   <a href="${pageContext.request.contextPath}/files/${periodEntity.id}">${periodEntity.fileName}</a>
                 </td>
-                <td>${accountingEntity.docName}</td>
-                <td>${accountingEntity.startDate}</td>
-                <td>${accountingEntity.finishDate}</td>
-                <td>${accountingEntity.createDocDate}</td>
+                <td>${periodEntity.docName}</td>
+                <td>${periodEntity.startDate}</td>
+                <td>${periodEntity.finishDate}</td>
+                <td>${periodEntity.createDocDate}</td>
             </tr>
         </c:forEach>
     </table>

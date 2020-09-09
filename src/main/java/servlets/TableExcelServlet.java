@@ -1,6 +1,7 @@
 package servlets;
 
 import dao.DaoPeriodEntity;
+import model.ClassName;
 import model.PeriodEntity;
 
 import javax.servlet.ServletException;
@@ -25,6 +26,7 @@ public class TableExcelServlet extends HttpServlet {
         String path = req.getPathInfo();
         int fileId = Integer.parseInt(path.substring(1));
         PeriodEntity periodEntity = daoPeriodEntity.get(fileId);
+        req.setAttribute("className", new ClassName());
         req.setAttribute("periodEntity", periodEntity);
         req.getRequestDispatcher("/WEB-INF/pages/tableExcel.jsp").forward(req, resp);
     }

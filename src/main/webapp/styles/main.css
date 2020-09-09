@@ -10,11 +10,19 @@ header a:link {
 }
 header img {
   max-width: 64px;
+  margin-left: 20px;
 }
 
 table {
   border-collapse: collapse;
   border : 1px solid gray;
+  margin: 20px auto;
+}
+
+th {
+  border-collapse: collapse;
+  border : 1px solid black;
+  padding: 10px;
 }
 
 td {
@@ -31,9 +39,6 @@ td {
   font-weight: bold;
 }
 
-img.product-tile {
-  max-width: 64px;
-}
 
 .error {
   color: red;
@@ -43,7 +48,14 @@ img.product-tile {
   color: green;
 }
 
-/* Page specific styles */
-body.product-list {
+.table-bank {
 
+}
+
+.left-text {
+  text-align: left;
+}
+
+.center-text {
+  text-align: center;
 }

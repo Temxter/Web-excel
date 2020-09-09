@@ -11,13 +11,13 @@ public class BankEntity {
     private int id;
     private String name;
     @OneToMany(mappedBy = "bankEntity")
-    private List<AccountingEntity> accountingEntityList;
+    private List<PeriodEntity> periodEntityList;
 
     public BankEntity() { }
 
     public BankEntity(String name) {
         this.name = name;
-        accountingEntityList = new ArrayList<>();
+        periodEntityList = new ArrayList<>();
     }
 
     public int getId() {
@@ -36,11 +36,11 @@ public class BankEntity {
         this.name = name;
     }
 
-    public List<AccountingEntity> getAccountingEntityList() {
-        return accountingEntityList;
+    public List<PeriodEntity> getPeriodEntityList() {
+        return periodEntityList;
     }
 
-    public void setAccountingEntityList(List<AccountingEntity> accountingEntityList) {
-        this.accountingEntityList = accountingEntityList;
+    public void setPeriodEntityList(List<PeriodEntity> periodEntityList) {
+        this.periodEntityList = periodEntityList;
     }
 }

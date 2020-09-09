@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class FilesServlet extends HttpServlet {
+public class FileListServlet extends HttpServlet {
 
     private DaoPeriodEntity daoPeriodEntity;
 
@@ -20,6 +20,8 @@ public class FilesServlet extends HttpServlet {
         super.init();
         daoPeriodEntity = new DaoPeriodEntity();
     }
+
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

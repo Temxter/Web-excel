@@ -15,21 +15,24 @@ public class PeriodEntity {
     private Date createDocDate;
     private String docName;
     private String fileName;
-    @OneToMany(mappedBy = "periodEntity")
+    private String currency;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private BankEntity bankEntity;
+    @OneToMany(mappedBy = "periodEntity", fetch = FetchType.EAGER)
     private List<AccountingEntity> accountingEntityList;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "periodEntity")
-    private List<ClassNameEntity> classNameEntityList;
 
     public PeriodEntity() { }
 
-    public PeriodEntity(Date startDate, Date finishDate, Date createDocDate, String docName, String fileName) {
+    public PeriodEntity(Date startDate, Date finishDate, Date createDocDate, String docName, String fileName,
+                        String currency, BankEntity bankEntity) {
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.createDocDate = createDocDate;
         this.docName = docName;
         this.fileName = fileName;
+        this.currency = currency;
+        this.bankEntity = bankEntity;
         accountingEntityList = new ArrayList<>();
-        classNameEntityList = new ArrayList<>();
     }
 
     public String getFileName() {
@@ -38,14 +41,6 @@ public class PeriodEntity {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public List<ClassNameEntity> getClassNameEntityList() {
-        return classNameEntityList;
-    }
-
-    public void setClassNameEntityList(List<ClassNameEntity> classNameEntityList) {
-        this.classNameEntityList = classNameEntityList;
     }
 
     public int getId() {
@@ -94,5 +89,21 @@ public class PeriodEntity {
 
     public void setAccountingEntityList(List<AccountingEntity> accountingEntityList) {
         this.accountingEntityList = accountingEntityList;
+    }
+
+    public BankEntity getBankEntity() {
+        return bankEntity;
+    }
+
+    public void setBankEntity(BankEntity bankEntity) {
+        this.bankEntity = bankEntity;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

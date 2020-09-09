@@ -9,6 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -26,16 +27,16 @@ public class ExcelAccountParser {
     private String bankName;
     private String fileName;
     private String reportName;
+    private String currency;
     private Date start;
     private Date finish;
     private Date docCreated;
     private static final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private static final Pattern datePattern = Pattern.compile("\\d{2}.\\d{2}.\\d{4}");
-    private static final Pattern anyNumberPattern = Pattern.compile("\\d+");
-    private DaoAccountingEntity daoAccountingEntity = new DaoAccountingEntity();
+
 
     public List<AccountingEntity> parse(String filename) throws IOException, ParseException {
-        fileName = filename;
+        this.fileName = filename.substring(filename.lastIndexOf(File.separator) + 1); //file name without path
         HSSFWorkbook excelBook = new HSSFWorkbook(new FileInputStream(filename));
         HSSFSheet excelSheet = excelBook.getSheetAt(0);
         bankName = excelSheet.getRow(0).getCell(0).getStringCellValue();
@@ -50,8 +51,11 @@ public class ExcelAccountParser {
         }
         docCreated = excelSheet.getRow(5).getCell(0).getDateCellValue();
 
-        PeriodEntity periodEntity = new PeriodEntity(start, finish, docCreated, reportName, fileName);
+        currency = excelSheet.getRow(5).getCell(6).getStringCellValue();
+
         BankEntity bankEntity = new BankEntity(bankName);
+        PeriodEntity periodEntity = new PeriodEntity(start, finish, docCreated,
+                reportName, fileName, currency, bankEntity);
 
         int lastRowNum = excelSheet.getLastRowNum();
 
@@ -61,42 +65,15 @@ public class ExcelAccountParser {
             HSSFRow row = excelSheet.getRow(i);
 
             if (row.getCell(0).getCellType() == CellType.NUMERIC) {
-
-                if (row.getCell(0).getCellType() == CellType.STRING
-                        && row.getCell(0).getStringCellValue().length() > 4) { // class name
-                    classStringParseRow(row, periodEntity);
-                }
-                else { // row with numbers
-                    accountingParseRow(row, bankEntity, periodEntity, accountingEntityList);
-                }
+                accountingParseRow(row, bankEntity, periodEntity, accountingEntityList);
             } else if (row.getCell(0).getCellType() == CellType.STRING) {
-                if (row.getCell(0).getStringCellValue().length() > 4) {
-                    classStringParseRow(row, periodEntity);
-                } else {
+                if (row.getCell(0).getStringCellValue().length() <= 4) {
                     accountingParseRow(row, bankEntity, periodEntity, accountingEntityList);
-                }
+                } // else class string info
             }
         }
 
         return accountingEntityList;
-    }
-
-    private void classStringParseRow(HSSFRow row, PeriodEntity periodEntity) {
-        String className = row.getCell(0).getStringCellValue();
-        String classNumString;
-
-        Matcher matcherNumber = anyNumberPattern.matcher(className);
-        if (matcherNumber.find()) {
-            classNumString = matcherNumber.group();
-        }
-        else {
-            return;
-        }
-
-        int classNum = Integer.parseInt(classNumString);
-        ClassNameEntity classNameEntity = new ClassNameEntity(classNum, className, periodEntity);
-        // TODO save to DB?
-        periodEntity.getClassNameEntityList().add(classNameEntity);
     }
 
     private void accountingParseRow(HSSFRow row, BankEntity bankEntity, PeriodEntity periodEntity,
@@ -114,7 +91,7 @@ public class ExcelAccountParser {
         BigDecimal turnoverDebit = new BigDecimal(row.getCell(3).getNumericCellValue());
         BigDecimal turnoverCredit = new BigDecimal(row.getCell(4).getNumericCellValue());
         AccountingEntity accountingEntity = new AccountingEntity(accountNum, inputBalance, isAsset,
-                turnoverDebit, turnoverCredit, bankEntity, periodEntity);
+                turnoverDebit, turnoverCredit, periodEntity);
         accountingEntityList.add(accountingEntity);
 //                daoAccountingEntity.save(accountingEntity);
     }

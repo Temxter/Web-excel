@@ -7,7 +7,7 @@
 
   <servlet>
     <servlet-name>files</servlet-name>
-    <servlet-class>servlets.TableExcelServlet</servlet-class>
+    <servlet-class>servlets.FileListServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -23,6 +23,16 @@
   <servlet-mapping>
     <servlet-name>TableExcel</servlet-name>
     <url-pattern>/files/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UploadExcelFile</servlet-name>
+    <servlet-class>servlets.UploadExcelFileServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>UploadExcelFile</servlet-name>
+    <url-pattern>/upload</url-pattern>
   </servlet-mapping>
   
   <error-page>
