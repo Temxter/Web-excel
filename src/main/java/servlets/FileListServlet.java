@@ -1,7 +1,6 @@
 package servlets;
 
 import dao.DaoPeriodEntity;
-import model.AccountingEntity;
 import model.PeriodEntity;
 
 import javax.servlet.ServletException;

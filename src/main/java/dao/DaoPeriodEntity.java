@@ -1,7 +1,6 @@
 package dao;
 
 
-import model.AccountingEntity;
 import model.PeriodEntity;
 import services.EntityManagerFactorySingleton;
 
